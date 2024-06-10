@@ -29,7 +29,7 @@ class UserLoginTest extends TestCase
     public function test_unsuccessful_login()
     {
         $response = $this->post('/login', [
-            'email' => 'wrong@example.com',
+            'email' => 'user@example.com',
             'password' => 'wrongpassword',
         ]);
 

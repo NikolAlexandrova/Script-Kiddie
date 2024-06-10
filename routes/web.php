@@ -24,10 +24,6 @@ Route::middleware(['auth'])->group(function () {
 Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::post('/test-login', function () {
-    Log::info('Test login route hit');
-    return 'Test login route hit';
-});
 
 
 

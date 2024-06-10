@@ -3,8 +3,10 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use App\Services\UserService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Services\UserService;
+use App\Models\User;
+use Illuminate\Validation\ValidationException;
 
 class UserServiceTest extends TestCase
 {
@@ -27,13 +29,16 @@ class UserServiceTest extends TestCase
             'password_confirmation' => 'Password123!',
         ];
 
-        $result = $this->userService->register($data);
-        $this->assertTrue($result);
-        $this->assertDatabaseHas('users', ['email' => 'test@example.com']);
+        $user = $this->userService->register($data);
+
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertEquals('test@example.com', $user->email);
     }
 
     public function test_registration_with_missing_required_fields()
     {
+        $this->expectException(ValidationException::class);
+
         $data = [
             'name' => '',
             'email' => 'invalid-email',
@@ -41,8 +46,6 @@ class UserServiceTest extends TestCase
             'password_confirmation' => 'short',
         ];
 
-        $result = $this->userService->register($data);
-        $this->assertFalse($result);
-        $this->assertDatabaseMissing('users', ['email' => 'invalid-email']);
+        $this->userService->register($data);
     }
 }

@@ -21,32 +21,31 @@ class RegisterController extends Controller
 
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required']
-        ]);
-
 //        return Validator::make($data, [
 //            'name' => ['required', 'string', 'max:255'],
 //            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-//            'password' => [
-//                'required',
-//                'string',
-//                'min:12',
-//                'regex:/[a-z]/',
-//                'regex:/[A-Z]/',
-//                'regex:/[0-9]/',
-//                'regex:/[@$!%*#?&]/',
-//                'confirmed'
-//            ],
+//            'password' => ['required']
 //        ]);
+
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => [
+                'required',
+                'string',
+                'min:12',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/',
+                'confirmed'
+            ],
+        ]);
     }
 
     protected function create(array $data)
     {
         $hashedPassword = Hash::make($data['password']);
-        \Log::info('Registering user with hashed password: ' . $hashedPassword);
 
         return User::create([
             'name' => $data['name'],

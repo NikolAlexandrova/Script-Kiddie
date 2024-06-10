@@ -23,7 +23,7 @@ class LoginController extends Controller
 
     protected function maxAttempts()
     {
-        return 5;
+        return 4;
     }
 
     protected function decayMinutes()
@@ -36,26 +36,16 @@ class LoginController extends Controller
         Log::info('Attempting login for email: ' . $request->input('email'));
 
         $credentials = $request->only('email', 'password');
-        $user = User::where('email', $request['email'])->first();
-        //dd($request->input('password'), $user->password);
-        $hashCheck = Hash::check($request->input('password'), $user->password);
-//        dd($hashCheck);
-        if ($user) {
-            Log::info('Stored hash: ' . $user->password);
-            Log::info('Input password: ' . $request->input('password'));
-            Log::info('Hash matches: ' . ($hashCheck ? 'true' : 'false'));
-        } else {
-            Log::warning('No user found with email: ' . $request->input('email'));
+        $user = User::where('email', $request->input('email'))->first();
+
+        if ($user && Hash::check($request->input('password'), $user->password)) {
+            if (Auth::attempt($credentials)) {
+                Log::info('Login successful for email: ' . $request->input('email'));
+                return redirect()->intended($this->redirectTo);
+            }
         }
 
-
-        if ($hashCheck && Auth::attempt($credentials)) {
-            Log::info('Login successful for email: ' . $request->input('email'));
-            return redirect()->intended($this->redirectTo);
-        } else {
-            Log::warning('Login failed for email: ' . $request->input('email'));
-            return redirect()->back()->withErrors(['email' => 'These credentials do not match our records.']);
-        }
+        Log::warning('Login failed for email: ' . $request->input('email'));
+        return redirect()->back()->withErrors(['email' => 'These credentials do not match our records.']);
     }
-
 }
