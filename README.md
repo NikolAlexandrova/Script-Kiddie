@@ -1,66 +1,97 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Testing assignment: 
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Test Plan
 
-## About Laravel
+### User Stories to Test
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+#### User Story 1: Login Feature
+- **As a user, I want to be able to log in with valid credentials, so that I can access my account.**
+    - **Positive scenario:**
+        - Scenario: User logs in with valid email and password.
+        - **Why it is tested:** Ensures that users can access their accounts with the correct credentials.
+    - **Negative Scenario:**
+        - Scenario: User logs in with invalid credentials.
+        - **Why it is tested:** Ensures that incorrect credentials are not accepted, enhancing security.
+        - Scenario: User logs in with a nonexistent email.
+        - **Why it is tested:** Ensures that only registered users can log in, preventing unauthorized access.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+#### User Story 2: Registration Feature
+- **As a new user, I want to be able to register with valid data, so that I can create an account.**
+    - **Positive Scenario:**
+        - Scenario: User registers with all required valid data.
+        - **Why it is tested:** Ensures that new users can create accounts without issues.
+    - **Negative Scenario:**
+        - Scenario: User attempts to register with missing required fields.
+        - **Why it is tested:** Ensures that all required information is provided for account creation.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### System Tests Per User Story
 
-## Learning Laravel
+**User Story 1: Login Feature**
+- **Positive scenario:**
+    - Test: Successful login with valid email and password.
+    - **Why it is tested:** Ensures that users can access their accounts with the correct credentials.
+- **Negative Scenario:**
+    - Test: Unsuccessful login with invalid credentials.
+    - **Why it is tested:** Ensures that incorrect credentials are not accepted, enhancing security.
+    - Test: Unsuccessful login with a nonexistent email.
+    - **Why it is tested:** Ensures that only registered users can log in, preventing unauthorized access.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**User Story 2: Registration Feature**
+- **Positive scenario:**
+    - Test: Successful registration with valid data.
+    - **Why it is tested:** Ensures that new users can create accounts without issues.
+- **Negative Scenario:**
+    - Test: Unsuccessful registration with missing required fields.
+    - **Why it is tested:** Ensures that all required information is provided for account creation.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Unit Tests Per User Story
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**User Story 1: Login Feature**
+- **Positive scenario:**
+    - Test: Check login method with correct credentials.
+    - **Why it is tested:** Verifies that the login logic works correctly for valid inputs.
+- **Negative Scenario:**
+    - Test: Check login method with incorrect password.
+    - **Why it is tested:** Verifies that incorrect passwords are rejected.
+    - Test: Check login method with nonexistent email.
+    - **Why it is tested:** Verifies that only existing users can log in.
 
-## Laravel Sponsors
+**User Story 2: Registration Feature**
+- **Positive scenario:**
+    - Test: Validate registration method with correct data.
+    - **Why it is tested:** Ensures that the registration logic correctly handles valid data.
+- **Negative Scenario:**
+    - Test: Validate registration method with missing fields.
+    - **Why it is tested:** Ensures that registration fails if required fields are missing.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Evaluation
 
-### Premium Partners
+**Describe a possible mistake/error that can be detected by your test(s):**
+- **Example:** One possible mistake that can be detected by the tests is an incorrect password. The test ensures that users cannot log in if they provide a wrong password.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+**Describe a possible mistake/error that cannot be detected by your test(s):**
+- **Example:** An error that may not be detected by these tests is a bug related to the user interface (UI) that causes login or registration buttons to be non-functional. These tests do not cover front-end issues.
 
-## Contributing
+**To what extent can you conclude that "everything works correctly"? Provide arguments!**
+- While the tests cover essential aspects of login and registration functionalities, concluding that "everything works correctly" can be premature. The tests ensure that the backend logic for authentication and user creation works as expected for specified scenarios. However, they do not cover all possible edge cases, integration issues with other parts of the application, performance under load, security vulnerabilities, or front-end related bugs. Therefore, comprehensive testing including UI tests, security tests, and performance tests would be necessary to confidently conclude that everything works correctly.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Linking Tests to the V-Model
 
-## Code of Conduct
+1. **Requirement Analysis**: User should be able to log in with valid credentials.
+    - **System Tests**: Written to ensure that the system meets all specified requirements.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. **System Design**: Design the login module.
+    - **Integration Tests**: Ensures that different modules or systems work together.
 
-## Security Vulnerabilities
+3. **Architecture Design**: Plan how the login module integrates with the rest of the system.
+    - **Unit Tests**: Focuses on individual components to ensure that each one operates correctly.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+4. **Module Design**: Design the individual components of the login module.
+    - **Unit Tests**: Detailed design and testing of individual modules or components.
 
-## License
+### Use of Factories
+- Implement factories to create consistent and reliable test data for unit and system tests, ensuring a robust test environment.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Evaluation
+- The tests were designed to cover both Positive scenario and Negative Scenario for login and registration functionalities. They ensure that the core authentication mechanisms work correctly and handle various error scenarios gracefully. The testing results indicate that the authentication and registration functionalities are working as intended under normal and adverse conditions. However, the tests do not cover front-end issues or other possible integration problems. While the current tests are comprehensive for backend logic, an improvement would be to include front-end tests using tools like Selenium or Cypress to ensure that UI elements function correctly. Additionally, security tests to check for vulnerabilities such as SQL injection or XSS could be added to the test suite.
+
