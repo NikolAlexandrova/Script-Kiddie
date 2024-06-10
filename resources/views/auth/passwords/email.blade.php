@@ -5,6 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                <p>If you have trouble remembering your password, consider using a password manager.</p>
+
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
                 <div class="card-body">

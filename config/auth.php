@@ -42,6 +42,11 @@ return [
         ],
     ],
 
+    'throttle' => [
+        'maxAttempts' => 5, // Maximum number of attempts
+        'decayMinutes' => 1, // Lockout period in minutes
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | User Providers
